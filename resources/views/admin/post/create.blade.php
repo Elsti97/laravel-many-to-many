@@ -27,6 +27,16 @@
             </select>
         </div>
 
+        <div class="mt-5 text-center">
+            <h4><label for="">Tags:</label></h4>
+            @foreach ($tags as $tag)
+                <label for="">
+                    <input type="checkbox" name="tags[]" value="{{$tag->id}}">
+                    {{$tag->name}}
+                </label>
+            @endforeach
+        </div>
+
         <div class="text-center">
             <button type="submit" class=" mt-3 btn btn-success">Crea</button>
         </div>

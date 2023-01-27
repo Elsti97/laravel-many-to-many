@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -42,8 +43,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::All();
+        $tags = Tag::All();
 
-        return view('admin.post.create', compact('categories'));
+        return view('admin.post.create', compact('categories', 'tags'));
     }
 
     /**
@@ -55,9 +57,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $posts = $request->all();
+
         $new_post = new Post();
         $new_post->fill($posts);
         $new_post->save();
+
+        if(array_key_exists('tags', $posts)){
+            $new_post->tags()->sync($posts['tags']);
+        }
 
         return redirect()->route('admin.post.index');
     }
