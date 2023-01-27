@@ -20,6 +20,13 @@
                 @endif
             </div>
 
+            <h3>I tags sono:</h3>
+        @foreach ($elem->tags as $tag)
+            <ul>
+                <li>{{$tag->name}}</li>
+            </ul>
+        @endforeach
+
 
             <div class="d-flex justify-items-between">
                 <a href="{{ route('admin.post.show', $elem->id) }}">

@@ -20,16 +20,8 @@ class PostController extends Controller
     {
         //creo una variabile per recuperare il record dell'utente loggato
 
-        // $userId = Auth::id();
-        // $user = Auth::user();
-
-        // $posts = Post::All();
-        // $posts = Post::with('categories')->get();
-        // $category = Category::All();
-        // $data = [
         $data = [
-            'posts' => Post::with('category')->get()
-            // 'categories' => Category::All()
+            'posts' => Post::with('category', 'tags')->get()
         ];
 
         return view('admin.post.index', $data);
@@ -91,8 +83,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $categories = Category::All();
+        $tags = Tag::All();
 
-        return view('admin.post.edit', compact('post', 'categories'));
+        return view('admin.post.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -108,6 +101,14 @@ class PostController extends Controller
         $posts = Post::findOrFail($id);
 
         $posts->update($data);
+
+        // Per controllare checkbox selezionate dall'utente
+        if(array_key_exists('tags', $data)){
+            $posts->tags()->sync($data['tags']);
+        } else{
+            // Per checkbox non selezionate
+            $posts->tags()->sync([]);
+        }
         return redirect()->route('admin.post.index', $posts->id);
     }
 
@@ -120,7 +121,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         $posts = Post::findOrFail($id);
+        $posts->tags()->sync([]);
         $posts->delete();
+
         return redirect()->route('admin.post.index');
     }
 }

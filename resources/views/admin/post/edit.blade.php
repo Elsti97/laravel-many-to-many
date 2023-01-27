@@ -33,7 +33,20 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Modifica</button>
+            <div class="mt-5 text-center">
+                <h4><label for="">Tags:</label></h4>
+                @foreach ($tags as $tag)
+                    <label for="">
+                        <input type="checkbox" name="tags[]" value="{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : '' }}>
+                        {{$tag->name}}
+                    </label>
+                @endforeach
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Modifica</button>
+            </div>
+
 
         </form>
 
