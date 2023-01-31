@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\Tag;
+use App\Mail\SendNewMail;
+
 
 class PostController extends Controller
 {
@@ -57,6 +61,10 @@ class PostController extends Controller
         if(array_key_exists('tags', $posts)){
             $new_post->tags()->sync($posts['tags']);
         }
+
+        $mail = new SendNewMail($new_post);
+        $userMail = Auth::user()->email;
+        Mail::to($userMail)->send($mail);
 
         return redirect()->route('admin.post.index');
     }
