@@ -55,6 +55,11 @@ class PostController extends Controller
         $posts = $request->all();
 
         $new_post = new Post();
+
+        if(array_key_exists('image', $posts)){
+            $image_url = Storage::put('post_images', $posts['image']);
+            $posts['cover'] = $image_url;
+        }
         $new_post->fill($posts);
         $new_post->save();
 

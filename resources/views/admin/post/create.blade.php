@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-center">Crea un post</h1>
 
-    <form class="container" action="{{ route('admin.post.store') }}" method="POST">
+    <form class="container" action="{{ route('admin.post.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <label class="form-label">Titolo</label>
@@ -35,6 +35,11 @@
                     {{$tag->name}}
                 </label>
             @endforeach
+        </div>
+
+        <div>
+            <label for="">Aggiungi immagine</label>
+            <input type="file" name="image" class="form-control-file">
         </div>
 
         <div class="text-center">

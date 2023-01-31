@@ -18,7 +18,8 @@
     <!-- place navbar here -->
   </header>
   <main>
-    <h1>Rivincita Paolo</h1>
+    <h1>Caro cliente</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, tempore dolorum deleniti voluptates nobis expedita quod commodi delectus ducimus molestias at dicta totam reiciendis officiis asperiores! Est recusandae eos autem.</p>
   </main>
   <footer>
     <!-- place footer here -->
